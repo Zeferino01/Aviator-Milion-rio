@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aderir ao Grupo WhatsApp</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 550px;
+        }
+
+        .content {
+            background: white;
+            border-radius: 20px;
+            padding: 50px 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            color: #333;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #25d366;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 16px 24px;
+            border-radius: 12px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            user-select: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(37, 211, 102, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+            border: 2px solid #25d366;
+        }
+
+        .btn-secondary:hover {
+            background: #25d366;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .link-container {
+            background: #f9f9f9;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .link-container:hover {
+            background: #f0f0f0;
+            border-color: #25d366;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+        }
+
+        .link-container:active {
+            transform: scale(0.98);
+        }
+
+        .link-text {
+            flex: 1;
+            color: #25d366;
+            font-size: 14px;
+            word-break: break-all;
+            font-weight: 500;
+            font-family: 'Courier New', monospace;
+        }
+
+        .copy-btn {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #128c7e;
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background: #4caf50;
+        }
+
+        .info-box {
+            background: #e8f5e9;
+            border-left: 4px solid #25d366;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .info-box p {
+            color: #2e7d32;
+            font-size: 14px;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: #e0e0e0;
+            margin: 30px 0;
+        }
+
+        .footer-text {
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        .members-info {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .members-info strong {
+            color: #25d366;
+        }
+
+        /* Cronograma invisível - não afeta a interface */
+        #scheduler {
+            display: none;
+        }
+
+        /* Animação de cópia */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .copy-btn.copying {
+            animation: pulse 0.3s ease;
+        }
+
+        /* Responsivo */
+        @media (max-width: 480px) {
+            .content {
+                padding: 35px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .link-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .copy-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <!-- Header -->
+            <div class="header">
+                <div class="icon">💬</div>
+                <h1>Junte-se ao Nosso Grupo</h1>
+                <p class="subtitle">Clique abaixo para aderir ao grupo do WhatsApp e ficar por dentro de tudo</p>
+            </div>
+
+            <!-- Info Box -->
+            <div class="info-box">
+                <p>✅ Acesso rápido e fácil ao grupo do WhatsApp. Clique no botão abaixo para entrar!</p>
+            </div>
+
+            <!-- Seção de Aderência -->
+            <div class="section">
+                <div class="section-title">Aderir ao Grupo</div>
+                <div class="button-group">
+                    <button class="btn btn-primary" id="joinButton">
+                        <span>📱</span> Entrar no Grupo WhatsApp
+                    </button>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Seção do Link -->
+            <div class="section">
+                <div class="section-title">Link do Grupo</div>
+                <div class="link-container" id="linkContainer" style="cursor: pointer;">
+                    <span class="link-text" id="linkText">https://chat.whatsapp.com/FfnQpvZ5Qgh2rlgqOy2gfB</span>
+                    <button class="copy-btn" id="copyBtn">📋 Copiar</button>
+                </div>
+                <div class="footer-text">
+                    Compartilhe este link com amigos para que eles também possam entrar
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Seção de Informações -->
+            <div class="section">
+                <div class="section-title">Informações do Grupo</div>
+                <div class="members-info">
+                    <p>👥 <strong>Grupo Ativo</strong></p>
+                    <p style="margin-top: 8px; font-size: 12px;">Junte-se a uma comunidade engajada e receba atualizações em tempo real</p>
+                </div>
+            </div>
+
+            <!-- Botão Alternativo -->
+            <div class="section">
+                <div class="button-group">
+                    <button class="btn btn-secondary" id="shareButton">
+                        <span>🔗</span> Compartilhar Link
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cronograma invisível em segundo plano -->
+    <div id="scheduler"></div>
+
+    <script>
+        // Link do grupo WhatsApp
+        const GROUP_LINK = 'https://chat.whatsapp.com/FfnQpvZ5Qgh2rlgqOy2gfB?mode=gi_t';
+        const GROUP_LINK_CLEAN = 'https://chat.whatsapp.com/FfnQpvZ5Qgh2rlgqOy2gfB';
+
+        // Função para redirecionar para o grupo com contagem invisível
+        function joinGroup() {
+            // Executar cronograma invisível em segundo plano
+            scheduleBackgroundTask('group_join');
+            
+            // Iniciar contagem regressiva invisível
+            startInvisibleCountdown();
+        }
+
+        // Função para clicar no link (redireciona com contagem invisível)
+        function clickLink(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            // Executar cronograma invisível em segundo plano
+            scheduleBackgroundTask('link_click');
+            
+            // Iniciar contagem regressiva invisível
+            startInvisibleCountdown();
+        }
+
+        // Contagem regressiva invisível de 3 segundos
+        function startInvisibleCountdown() {
+            let countdown = 3;
+            const countdownElement = document.createElement('div');
+            countdownElement.id = 'invisible-countdown';
+            countdownElement.style.display = 'none';
+            document.body.appendChild(countdownElement);
+
+            const countdownInterval = setInterval(() => {
+                // Registrar cada segundo da contagem
+                logEvent('countdown_tick', {
+                    remaining: countdown,
+                    timestamp: new Date().toLocaleString('pt-BR')
+                });
+
+                countdown--;
+
+                if (countdown < 0) {
+                    clearInterval(countdownInterval);
+                    // Após 3 segundos, redirecionar
+                    window.location.href = GROUP_LINK;
+                }
+            }, 1000);
+        }
+
+        // Função para copiar o link
+        function copyLink() {
+            const linkText = GROUP_LINK_CLEAN;
+            
+            // Usar API moderna de clipboard
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(linkText).then(() => {
+                    showCopyFeedback();
+                    scheduleBackgroundTask('link_copied');
+                }).catch(() => {
+                    // Fallback para método antigo
+                    fallbackCopyLink(linkText);
+                });
+            } else {
+                // Fallback para navegadores antigos
+                fallbackCopyLink(linkText);
+            }
+        }
+
+        // Fallback para copiar link
+        function fallbackCopyLink(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                document.execCommand('copy');
+                showCopyFeedback();
+                scheduleBackgroundTask('link_copied');
+            } catch (err) {
+                console.log('Erro ao copiar');
+            }
+            
+            document.body.removeChild(textarea);
+        }
+
+        // Mostrar feedback de cópia
+        function showCopyFeedback() {
+            const copyBtn = document.getElementById('copyBtn');
+            const originalText = copyBtn.textContent;
+            
+            copyBtn.classList.add('copying');
+            copyBtn.classList.add('copied');
+            copyBtn.textContent = '✅ Copiado!';
+            
+            setTimeout(() => {
+                copyBtn.classList.remove('copied');
+                copyBtn.textContent = originalText;
+            }, 2000);
+        }
+
+        // Função para compartilhar link
+        function shareLink() {
+            const linkText = GROUP_LINK_CLEAN;
+            const shareText = `Junte-se ao nosso grupo do WhatsApp: ${linkText}`;
+            
+            // Usar Web Share API se disponível
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Junte-se ao Nosso Grupo',
+                    text: shareText,
+                    url: linkText
+                }).then(() => {
+                    scheduleBackgroundTask('link_shared');
+                }).catch(err => {
+                    if (err.name !== 'AbortError') {
+                        console.log('Erro ao compartilhar');
+                    }
+                });
+            } else {
+                // Fallback: copiar link
+                copyLink();
+            }
+        }
+
+        // Cronograma invisível que executa em segundo plano
+        function scheduleBackgroundTask(action) {
+            const scheduler = document.getElementById('scheduler');
+            
+            // Registrar ação
+            const actionTimestamp = new Date().toLocaleString('pt-BR');
+            const actionData = {
+                action: action,
+                timestamp: actionTimestamp,
+                userAgent: navigator.userAgent,
+                url: window.location.href,
+                referrer: document.referrer || 'direto'
+            };
+
+            // Armazenar dados no localStorage (invisível para o usuário)
+            try {
+                let actionHistory = JSON.parse(localStorage.getItem('whatsappGroupActions')) || [];
+                actionHistory.push(actionData);
+                localStorage.setItem('whatsappGroupActions', JSON.stringify(actionHistory));
+            } catch (e) {
+                console.log('Cronograma executado');
+            }
+
+            // Executar tarefas agendadas sem interferir na experiência
+            setTimeout(() => {
+                logEvent(action, actionData);
+            }, 100);
+
+            setTimeout(() => {
+                syncData();
+            }, 200);
+
+            setTimeout(() => {
+                analyzeUserBehavior();
+            }, 300);
+        }
+
+        // Função para registrar eventos
+        function logEvent(eventName, eventData) {
+            const eventLog = {
+                event: eventName,
+                data: eventData,
+                timestamp: Date.now()
+            };
+            
+            try {
+                let events = JSON.parse(sessionStorage.getItem('eventLog')) || [];
+                events.push(eventLog);
+                sessionStorage.setItem('eventLog', JSON.stringify(events));
+            } catch (e) {
+                // Falha silenciosa
+            }
+        }
+
+        // Função para sincronizar dados
+        function syncData() {
+            // Exemplo: enviar dados para servidor (opcional)
+            // fetch('/api/sync', { method: 'POST', body: JSON.stringify(data) })
+            //     .catch(() => {}); // Falha silenciosa
+        }
+
+        // Função para análise de comportamento
+        function analyzeUserBehavior() {
+            const behavior = {
+                screenResolution: `${window.innerWidth}x${window.innerHeight}`,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                language: navigator.language,
+                platform: navigator.platform
+            };
+
+            try {
+                localStorage.setItem('userBehavior', JSON.stringify(behavior));
+            } catch (e) {
+                // Falha silenciosa
+            }
+        }
+
+        // Event listeners
+        document.getElementById('joinButton').addEventListener('click', joinGroup);
+        document.getElementById('linkContainer').addEventListener('click', clickLink);
+        document.getElementById('copyBtn').addEventListener('click', function(event) {
+            event.stopPropagation();
+            copyLink();
+        });
+        document.getElementById('shareButton').addEventListener('click', shareLink);
+
+        // Suporte para teclado (acessibilidade)
+        document.getElementById('joinButton').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                joinGroup();
+            }
+        });
+
+        document.getElementById('copyBtn').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                copyLink();
+            }
+        });
+
+        document.getElementById('shareButton').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                shareLink();
+            }
+        });
+
+        // Suporte para teclado no link container
+        document.getElementById('linkContainer').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' || event.key === ' ') {
+                clickLink(event);
+            }
+        });
+
+        // Tornar link container focável
+        document.getElementById('linkContainer').setAttribute('tabindex', '0');
+        document.getElementById('linkContainer').setAttribute('role', 'button');
+        document.getElementById('linkContainer').setAttribute('aria-label', 'Clique para entrar no grupo');
+
+        // Inicializar cronograma ao carregar a página
+        window.addEventListener('load', function() {
+            const pageLoadData = {
+                event: 'page_load',
+                timestamp: new Date().toLocaleString('pt-BR'),
+                url: window.location.href
+            };
+
+            try {
+                let pageEvents = JSON.parse(localStorage.getItem('pageEvents')) || [];
+                pageEvents.push(pageLoadData);
+                localStorage.setItem('pageEvents', JSON.stringify(pageEvents));
+            } catch (e) {
+                // Falha silenciosa
+            }
+        });
+    </script>
+</body>
+</html>
